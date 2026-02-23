@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: medicare_backend
+    ports:
+      - "5001:5001"
+    environment:
+      NODE_ENV: development
+      PORT: 5001
+      MONGO_URI: mongodb://mongo:27017/medicare
+      JWT_SECRET: devsecretkey
+      JWT_EXPIRES_IN: 30d
+    depends_on:
+      - mongo
+    networks:
+      - medicare_network
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: medicare_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - medicare_network
+
+  mongo:
+    image: mongo:6-jammy
+    container_name: medicare_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - medicare_network
+
+volumes:
+  mongo_data:
+
+
+networks:
+  medicare_network:
+    driver: bridge

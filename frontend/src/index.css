@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  /* Soothing Medical Palette */
+  --primary: #2C4A52;
+  /* Deep muted teal-blue for strong contrast without harshness */
+  --primary-foreground: #F4F9F9;
+
+  --secondary: #8B9A9A;
+  /* Soft sage/gray for secondary text */
+
+  --accent: #5E9387;
+  /* Calming sage green for primary actions & highlights */
+  --accent-hover: #4A7A6F;
+  --accent-foreground: #ffffff;
+
+  --background: #F7FAF9;
+  /* Off-white with a hint of green/blue for reduced eye strain */
+
+  --foreground: #334242;
+  /* Soft dark gray instead of harsh black */
+
+  --card: #FFFFFF;
+  --card-border: #E8F0EE;
+  /* Very subtle border matching the background hue */
+}
+
+@layer base {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-weight: 500;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tone down aggressive font-weights globally for a softer look */
+.font-black,
+.font-extrabold {
+  font-weight: 600 !important;
+  letter-spacing: 0.05em;
+}
+
+.font-bold {
+  font-weight: 500 !important;
+}
+
+/* Custom Utilities for Premium Feel */
+.medical-shadow {
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+}
+
+.medical-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.medical-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+}
