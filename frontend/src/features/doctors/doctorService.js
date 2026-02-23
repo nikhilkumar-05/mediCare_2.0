@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../../utils/api';
 
 const API_URL = '/api/auth/doctors'; // This assumes we have a route for this or can use auth/users filtered by role
 
@@ -9,7 +9,7 @@ const getDoctors = async (token) => {
         },
     };
 
-    const response = await axios.get(API_URL, config);
+    const response = await api.get(API_URL, config);
     return response.data;
 };
 

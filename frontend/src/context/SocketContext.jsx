@@ -9,8 +9,8 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
         // Determine backend URL: 
-        // In production, might be `/`, in dev it's on port 5001
-        const endPoint = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001';
+        // In production, VITE_API_URL is injected by Vercel
+        const endPoint = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
         const newSocket = io(endPoint);
 

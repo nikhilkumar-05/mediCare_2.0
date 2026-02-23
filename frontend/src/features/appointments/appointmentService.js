@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../../utils/api';
 
 const API_URL = '/api/appointments/';
 
@@ -10,7 +10,7 @@ const bookAppointment = async (appointmentData, token) => {
         },
     };
 
-    const response = await axios.post(API_URL, appointmentData, config);
+    const response = await api.post(API_URL, appointmentData, config);
     return response.data;
 };
 
@@ -22,7 +22,7 @@ const getAppointments = async (token) => {
         },
     };
 
-    const response = await axios.get(API_URL + 'me', config);
+    const response = await api.get(API_URL + 'me', config);
     return response.data;
 };
 
@@ -34,7 +34,7 @@ const updateStatus = async (id, status, extraData, token) => {
         },
     };
 
-    const response = await axios.put(`${API_URL}${id}/status`, { status, ...extraData }, config);
+    const response = await api.put(`${API_URL}${id}/status`, { status, ...extraData }, config);
     return response.data;
 };
 
@@ -46,7 +46,7 @@ const updatePrescription = async (id, prescription, token) => {
         },
     };
 
-    const response = await axios.put(`${API_URL}${id}/prescription`, { prescription }, config);
+    const response = await api.put(`${API_URL}${id}/prescription`, { prescription }, config);
     return response.data;
 };
 
@@ -58,4 +58,3 @@ const appointmentService = {
 };
 
 export default appointmentService;
-
