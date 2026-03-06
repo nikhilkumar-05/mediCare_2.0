@@ -4,6 +4,7 @@ const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
 const connectDB = require('./config/db');
+const keepAlive = require('./services/keepAlive');
 
 // Load env vars
 dotenv.config();
@@ -71,4 +72,5 @@ const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+    keepAlive(); // 🤖 Ping /api/health every 14 min to prevent Render free-tier spin-down
 });
