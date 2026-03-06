@@ -53,11 +53,14 @@ io.on('connection', (socket) => {
     });
 });
 
+// ✅ Body parser — MUST be before routes
+app.use(express.json());
+
 // ✅ CORS — whitelist Vercel frontend + local dev
 const allowedOrigins = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
-    process.env.FRONTEND_URL, // Set this in Render → e.g. https://medicare2-0.vercel.app
+    process.env.FRONTEND_URL, // Set this in Render → e.g. https://medi-care-2-0.vercel.app
 ].filter(Boolean);
 
 app.use(cors({
