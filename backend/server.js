@@ -53,9 +53,25 @@ io.on('connection', (socket) => {
     });
 });
 
-// Middleware
-app.use(express.json());
-app.use(cors());
+// ✅ CORS — whitelist Vercel frontend + local dev
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    process.env.FRONTEND_URL, // Set this in Render → e.g. https://medicare2-0.vercel.app
+].filter(Boolean);
+
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow requests with no origin (mobile apps, Postman, keep-alive bot)
+        if (!origin) return callback(null, true);
+        // Allow any vercel.app subdomain (preview deploys) or whitelisted origins
+        if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+            return callback(null, true);
+        }
+        callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
+    credentials: true,
+}));
 
 // Health Check API
 app.get('/api/health', (req, res) => {

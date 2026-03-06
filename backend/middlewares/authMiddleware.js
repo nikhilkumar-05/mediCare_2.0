@@ -19,16 +19,19 @@ const protect = async (req, res, next) => {
             // Get user from the token but exclude password
             req.user = await User.findById(decoded.id).select('-password');
 
-            next();
+            if (!req.user) {
+                return res.status(401).json({ success: false, message: 'User not found, token invalid' });
+            }
+
+            return next();
         } catch (error) {
-            console.error(error);
-            res.status(401).json({ success: false, message: 'Not authorized, token failed' });
+            console.error('[Auth] Token verification failed:', error.message);
+            return res.status(401).json({ success: false, message: 'Not authorized, token failed' });
         }
     }
 
-    if (!token) {
-        res.status(401).json({ success: false, message: 'Not authorized, no token provided' });
-    }
+    // No token present at all
+    return res.status(401).json({ success: false, message: 'Not authorized, no token provided' });
 };
 
 // Grant access to specific roles
